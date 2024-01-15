@@ -15,13 +15,13 @@ public class Shelter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Long id;
 
     @OneToMany(mappedBy = "Shelter")
-    private List<Pet> pets;
+    public List<Pet> pets;
 
     @OneToMany(mappedBy = "Shelter")
-    private List<AdoptionOffer> adoptionOffers;
+    public List<AdoptionOffer> adoptionOffers;
 
     // Other fields, constructors, getters, and setters
 
