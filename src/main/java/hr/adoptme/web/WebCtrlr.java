@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -28,8 +29,14 @@ public class WebCtrlr {
     private OfferRepo offerRepo;
 
     @GetMapping("/getPets")
+    //@RequestMapping(value = "/getPets", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Pet> getPets() {
         return petRepo.findAll();
+    }
+
+    @GetMapping("/getShelter")
+    public Optional<Shelter> getShelter(@RequestParam Long id) {
+        return shelterRepo.findById(id);
     }
 
     @GetMapping("/getShelters")
@@ -40,6 +47,11 @@ public class WebCtrlr {
     @GetMapping("/getOffers")
     public List<AdoptionOffer> getOffers() {
         return offerRepo.findAll();
+    }
+
+    @GetMapping("/getOffer")
+    public Optional<AdoptionOffer> getOffer(@RequestParam Long id) {
+        return offerRepo.findById(id);
     }
 
     @PostMapping("/addPet")

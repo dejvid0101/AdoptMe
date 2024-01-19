@@ -25,6 +25,9 @@ public class Shelter {
 
     // Other fields, constructors, getters, and setters
 
+    public String name;
+
+    public String address;
 
 
     public Long getId() {
