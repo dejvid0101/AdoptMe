@@ -1,11 +1,12 @@
 package hr.adoptme.web;
 
-import hr.adoptme.web.classes.AdoptionOffer;
-import hr.adoptme.web.classes.Pet;
-import hr.adoptme.web.classes.Shelter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hr.adoptme.web.classes.*;
 import hr.adoptme.web.enums.Availability;
 import hr.adoptme.web.enums.Gender;
 import hr.adoptme.web.enums.Health;
+import hr.adoptme.web.repos.AdopterRepo;
 import hr.adoptme.web.repos.OfferRepo;
 import hr.adoptme.web.repos.PetRepo;
 import hr.adoptme.web.repos.ShelterRepo;
@@ -27,6 +28,9 @@ public class WebCtrlr {
 
     @Autowired
     private OfferRepo offerRepo;
+
+    @Autowired
+    private AdopterRepo adopterRepo;
 
     @GetMapping("/getPets")
     //@RequestMapping(value = "/getPets", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
@@ -67,7 +71,45 @@ public class WebCtrlr {
         }
 
     @PostMapping("/addOffer")
-    public AdoptionOffer saveOffer(@RequestBody String offer) {
-        return offerRepo.save(new AdoptionOffer());
+    public AdoptionOffer saveOffer(@RequestBody String JSONoffer) throws JsonProcessingException {
+
+        ObjectMapper o=new ObjectMapper();
+        AdoptionOfferJSON newOfferJSON=o.readValue(JSONoffer, AdoptionOfferJSON.class); // create offer object from received json
+
+        adopterRepo.save(newOfferJSON.getAdopter()); // save adopter info
+
+        Optional<Pet> pet=petRepo.findById(newOfferJSON.getPet().id);
+
+        newOfferJSON.setShelter(pet.get().Shelter); // set offer shelter from pet with id
+
+        newOfferJSON.setPet(pet.get()); // set pet from db to offer
+
+        AdoptionOffer newOffer=new AdoptionOffer(newOfferJSON.getPet(), newOfferJSON.getShelter(),
+                newOfferJSON.getAdopter(), newOfferJSON.getAdoptionTerms());
+
+        System.out.println(newOffer.getPetId());
+
+        // find pet and save its shelter to adoptionoffer, then save
+
+        //Shelter shelter=shelterRepo.getById(adoptionOffer.getShelter().id);
+
+        //System.out.println(shelter);
+
+        return offerRepo.save(newOffer);
         }
+
+    @PostMapping("/addAdopter")
+    public Adopter saveAdopter(@RequestBody String JSONadopter) throws JsonProcessingException {
+        ObjectMapper o=new ObjectMapper();
+
+        Adopter adopter=o.readValue(JSONadopter, Adopter.class);
+        System.out.println(adopter.Phone);
+
+        return adopterRepo.save(adopter);
+    }
+
+    @GetMapping("/getAdopter")
+    public Optional<Adopter> getAdopter(@RequestParam Long id) {
+        return adopterRepo.findById(id);
+    }
 }

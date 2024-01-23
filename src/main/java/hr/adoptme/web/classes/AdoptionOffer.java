@@ -1,53 +1,56 @@
 package hr.adoptme.web.classes;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class AdoptionOffer {
 
+    public Long getAdopterId() {
+        return adopterId;
+    }
+
+    public void setAdopter(Adopter adopter) {
+        this.adopterId = adopter.id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    private Pet pet;
-
-    @OneToOne
-    private Shelter Shelter;
+    private Long petId;
+    private Long shelterId;
+    private Long adopterId;
 
     private String adoptionTerms;
 
     public AdoptionOffer() {
     }
 
-    public AdoptionOffer(Pet pet, Shelter shelter, String adoptionTerms) {
-        this.pet = pet;
-        this.Shelter = shelter;
-        this.adoptionTerms = adoptionTerms;
+    public AdoptionOffer(Pet pet, Shelter shelter, Adopter adopter, String adoptionTerms) {
+        this.petId = pet.id;
+        this.shelterId= shelter.getId();
+        this.adopterId=adopter.id;
+        this.adoptionTerms=adoptionTerms;
+
     }
 
     public Long getId() {
         return id;
     }
 
-    public Pet getPet() {
-        return pet;
+    public Long getPetId() {
+        return petId;
     }
 
     public void setPet(Pet pet) {
-        this.pet = pet;
+        this.petId = pet.id;
     }
 
-    public Shelter getShelter() {
-        return Shelter;
+    public Long getShelterId() {
+        return shelterId;
     }
 
     public void setShelter(Shelter shelter) {
-        this.Shelter = shelter;
+        this.shelterId = shelter.getId();
     }
 
     public String getAdoptionTerms() {

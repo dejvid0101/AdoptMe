@@ -20,7 +20,7 @@ public class Shelter {
     @OneToMany(mappedBy = "Shelter")
     public List<Pet> pets;
 
-    @OneToMany(mappedBy = "Shelter")
+    @OneToMany(mappedBy = "shelterId")
     public List<AdoptionOffer> adoptionOffers;
 
     // Other fields, constructors, getters, and setters
