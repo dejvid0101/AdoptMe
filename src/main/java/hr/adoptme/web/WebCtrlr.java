@@ -6,10 +6,10 @@ import hr.adoptme.web.classes.*;
 import hr.adoptme.web.enums.Availability;
 import hr.adoptme.web.enums.Gender;
 import hr.adoptme.web.enums.Health;
-import hr.adoptme.web.repos.AdopterRepo;
-import hr.adoptme.web.repos.OfferRepo;
-import hr.adoptme.web.repos.PetRepo;
-import hr.adoptme.web.repos.ShelterRepo;
+import hr.adoptme.web.services.AdopterSvc;
+import hr.adoptme.web.services.OfferSvc;
+import hr.adoptme.web.services.PetSvc;
+import hr.adoptme.web.services.ShelterSvc;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,58 +21,58 @@ import java.util.Optional;
 public class WebCtrlr {
 
     @Autowired
-    private PetRepo petRepo;
+    private PetSvc petSvc;
 
     @Autowired
-    private ShelterRepo shelterRepo;
+    private ShelterSvc shelterSvc;
 
     @Autowired
-    private OfferRepo offerRepo;
+    private OfferSvc offerSvc;
 
     @Autowired
-    private AdopterRepo adopterRepo;
+    private AdopterSvc adopterSvc;
 
     @GetMapping("/getPets")
     //@RequestMapping(value = "/getPets", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Pet> getPets() {
-        return petRepo.findAll();
+        return petSvc.findAllPets();
     }
 
     @GetMapping("/getShelter")
     public Optional<Shelter> getShelter(@RequestParam Long id) {
-        return shelterRepo.findById(id);
+        return shelterSvc.findShelterById(id);
     }
 
     @GetMapping("/getPet")
     public Optional<Pet> getPet(@RequestParam Long id) {
-        return petRepo.findById(id);
+        return petSvc.findPetById(id);
     }
 
     @GetMapping("/getShelters")
     public List<Shelter> getShelters() {
-        return shelterRepo.findAll();
+        return shelterSvc.findAllShelters();
     }
 
     @GetMapping("/getOffers")
     public List<AdoptionOffer> getOffers() {
-        return offerRepo.findAll();
+        return offerSvc.findAllOffers();
     }
 
     @GetMapping("/getOffer")
     public Optional<AdoptionOffer> getOffer(@RequestParam Long id) {
-        return offerRepo.findById(id);
+        return offerSvc.findOfferById(id);
     }
 
     @PostMapping("/addPet")
     public Pet savePet(@RequestBody String pet) {
         Shelter shelterr=new Shelter();
-        shelterRepo.save(shelterr);
-        return petRepo.save(new Pet("Fefe",6, Gender.FEMALE,"Kornjača", shelterr, Health.HEALTHY, Availability.AVAILABLE));
+        shelterSvc.saveShelter(shelterr);
+        return petSvc.savePet(new Pet("Fefe",6, Gender.FEMALE,"Kornjača", shelterr, Health.HEALTHY, Availability.AVAILABLE));
     }
 
     @PostMapping("/addShelter")
     public Shelter saveShelter(@RequestBody String shelter) {
-        return shelterRepo.save(new Shelter());
+        return shelterSvc.saveShelter(new Shelter());
         }
 
     @PostMapping("/addOffer")
@@ -81,9 +81,9 @@ public class WebCtrlr {
         ObjectMapper o=new ObjectMapper();
         AdoptionOfferJSON newOfferJSON=o.readValue(JSONoffer, AdoptionOfferJSON.class); // create offer object from received json
 
-        adopterRepo.save(newOfferJSON.getAdopter()); // save adopter info
+        adopterSvc.saveAdopter(newOfferJSON.getAdopter()); // save adopter info
 
-        Optional<Pet> pet=petRepo.findById(newOfferJSON.getPet().id);
+        Optional<Pet> pet=petSvc.findPetById(newOfferJSON.getPet().id);
 
         newOfferJSON.setShelter(pet.get().Shelter); // set offer shelter from pet with id
 
@@ -96,11 +96,11 @@ public class WebCtrlr {
 
         // find pet and save its shelter to adoptionoffer, then save
 
-        //Shelter shelter=shelterRepo.getById(adoptionOffer.getShelter().id);
+        // Shelter shelter=shelterSvc.getById(adoptionOffer.getShelter().id);
 
-        //System.out.println(shelter);
+        // System.out.println(shelter);
 
-        return offerRepo.save(newOffer);
+        return offerSvc.saveOffer(newOffer);
         }
 
     @PostMapping("/addAdopter")
@@ -110,11 +110,11 @@ public class WebCtrlr {
         Adopter adopter=o.readValue(JSONadopter, Adopter.class);
         System.out.println(adopter.Phone);
 
-        return adopterRepo.save(adopter);
+        return adopterSvc.saveAdopter(adopter);
     }
 
     @GetMapping("/getAdopter")
     public Optional<Adopter> getAdopter(@RequestParam Long id) {
-        return adopterRepo.findById(id);
+        return adopterSvc.findAdopterById(id);
     }
 }
