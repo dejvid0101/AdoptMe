@@ -43,6 +43,11 @@ public class WebCtrlr {
         return shelterRepo.findById(id);
     }
 
+    @GetMapping("/getPet")
+    public Optional<Pet> getPet(@RequestParam Long id) {
+        return petRepo.findById(id);
+    }
+
     @GetMapping("/getShelters")
     public List<Shelter> getShelters() {
         return shelterRepo.findAll();
