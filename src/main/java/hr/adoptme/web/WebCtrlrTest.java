@@ -21,6 +21,10 @@ import hr.adoptme.web.repos.AdopterRepo;
 import hr.adoptme.web.repos.OfferRepo;
 import hr.adoptme.web.repos.PetRepo;
 import hr.adoptme.web.repos.ShelterRepo;
+import hr.adoptme.web.services.AdopterSvc;
+import hr.adoptme.web.services.OfferSvc;
+import hr.adoptme.web.services.PetSvc;
+import hr.adoptme.web.services.ShelterSvc;
 import org.aspectj.lang.annotation.Before;
 import org.hibernate.internal.log.SubSystemLogging;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,15 +45,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 public class WebCtrlrTest {
 
     @Mock
-    private OfferRepo offerRepo;
+    private OfferSvc offerSvc;
     @Mock
-    private AdopterRepo adopterRepo;
+    private AdopterSvc adopterSvc;
 
     @Mock
-    private PetRepo petRepo;
+    private PetSvc petSvc;
 
     @Mock
-    private ShelterRepo shelterRepo;
+    private ShelterSvc shelterSvc;
 
     @InjectMocks
     private WebCtrlr webController;
@@ -68,7 +72,7 @@ public class WebCtrlrTest {
         Adopter adopter = new Adopter(adopterId, "Testni udomitelj", "udomi@me.com", "0987654321", "fefe");
 
         // Mocking the behavior of the repository
-        when(adopterRepo.findById(anyLong())).thenReturn(Optional.of(adopter));
+        when(adopterSvc.findAdopterById(anyLong())).thenReturn(Optional.of(adopter));
 
         // Act and Assert
         mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/api/getAdopter")
@@ -85,15 +89,14 @@ public class WebCtrlrTest {
         Long petId = 1L;
         Pet expectedPet = new Pet("Fifi", 3, Gender.MALE, "Mačka", new Shelter(), Health.HEALTHY, Availability.AVAILABLE);
         expectedPet.id = petId;
-        when(petRepo.findById(anyLong())).thenReturn(Optional.of(expectedPet));
+        when(petSvc.findPetById(anyLong())).thenReturn(Optional.of(expectedPet));
 
-        // Act and Assert
         mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/api/getPet").param("id", String.valueOf(petId)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(petId))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Name").value(expectedPet.Name))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.Age").value(expectedPet.Age));
-        // Add more assertions based on your Pet class attributes
+
     }
     @Test
     public void testSaveOffer() {
@@ -111,10 +114,10 @@ public class WebCtrlrTest {
                             .andExpect(MockMvcResultMatchers.status().isOk());
 
                     // Verify that shelter, adopter, offer have been added and pet exists
-                    verify(adopterRepo, times(1)).save(any());
-                    verify(shelterRepo, times(1)).save(any());
-                    verify(petRepo, times(1)).findById(anyLong());
-                    verify(offerRepo, times(1)).save(any());
+                    verify(adopterSvc, times(1)).saveAdopter(any());
+                    verify(shelterSvc, times(1)).saveShelter(any());
+                    verify(petSvc, times(1)).findPetById(anyLong());
+                    verify(offerSvc, times(1)).saveOffer(any());
                     return null;
                 });
     }
