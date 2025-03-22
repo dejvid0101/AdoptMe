@@ -106,7 +106,7 @@ public class WebCtrlrTest {
                 "\"Species\":\"Cat\",\"Shelter\":\"Rescue Shelter\",\"Health\":\"HEALTHY\"},\"adopter\":{\"Name\":\"g\","+
                 "\"Phone\":\"p\",\"Email\":\"dejvid0101@gmail.com\"},\"adoptionTerms\":\"M\"}";
 
-        lenient().when(webController.savePet("Fifi")) // Make sure any pet exists before saving offer
+        lenient().when(webController.savePet(new Pet("Fifi", 3, Gender.MALE, "Dog", new Shelter(), Health.HEALTHY, Availability.AVAILABLE))) // Make sure any pet exists before saving offer
                 .thenAnswer(invocation -> {
                     mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8080/api/addOffer")
                                     .content(fakeJSONoffer)

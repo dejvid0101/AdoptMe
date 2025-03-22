@@ -64,15 +64,17 @@ public class WebCtrlr {
     }
 
     @PostMapping("/addPet")
-    public Pet savePet(@RequestBody String pet) {
+    public Pet savePet(@RequestBody Pet pet) {
         Shelter shelterr=new Shelter();
         shelterSvc.saveShelter(shelterr);
+        //throw new RuntimeException("addPet not implemented");
         return petSvc.savePet(new Pet("Fefe",6, Gender.FEMALE,"Kornjača", shelterr, Health.HEALTHY, Availability.AVAILABLE));
     }
 
     @PostMapping("/addShelter")
     public Shelter saveShelter(@RequestBody String shelter) {
-        return shelterSvc.saveShelter(new Shelter());
+        throw new RuntimeException("addShelter not implemented");
+        //return shelterSvc.saveShelter(new Shelter());
         }
 
     @PostMapping("/addOffer")
@@ -92,14 +94,6 @@ public class WebCtrlr {
         AdoptionOffer newOffer=new AdoptionOffer(newOfferJSON.getPet(), newOfferJSON.getShelter(),
                 newOfferJSON.getAdopter(), newOfferJSON.getAdoptionTerms());
 
-        System.out.println(newOffer.getPetId());
-
-        // find pet and save its shelter to adoptionoffer, then save
-
-        // Shelter shelter=shelterSvc.getById(adoptionOffer.getShelter().id);
-
-        // System.out.println(shelter);
-
         return offerSvc.saveOffer(newOffer);
         }
 
@@ -107,6 +101,8 @@ public class WebCtrlr {
     public Adopter saveAdopter(@RequestBody String JSONadopter) throws JsonProcessingException {
         ObjectMapper o=new ObjectMapper();
 
+        // TODO: 22/03/2025 remove ObjectMapper 
+        
         Adopter adopter=o.readValue(JSONadopter, Adopter.class);
         System.out.println(adopter.Phone);
 
