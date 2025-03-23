@@ -9,43 +9,118 @@ import jakarta.persistence.*;
 @Entity
 public class Pet {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private int age;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    private String species;
+
+    @ManyToOne
+    private Shelter shelter;
+
+    @Enumerated(EnumType.STRING)
+    private Health health;
+
+    @Enumerated(EnumType.STRING)
+    private Availability availability;
+
+    // Constructors
     public Pet() {
     }
 
-    public Pet(String name, int age, Gender gender, String species, Shelter shelter, Health health, Availability availability) {
-        Name = name;
-        Age = age;
-        Gender = gender;
-        Species = species;
-        Shelter = shelter;
-        Health = health;
-        Availability = availability;
+    public Pet(String name, int age, Gender gender, String species,
+               Shelter shelter, Health health, Availability availability) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.species = species;
+        this.shelter = shelter;
+        this.health = health;
+        this.availability = availability;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
 
-    public String Name;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public int Age;
+    public String getName() {
+        return name;
+    }
 
-    @Enumerated(EnumType.STRING)
-    public Gender Gender;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String Species;
+    public int getAge() {
+        return age;
+    }
 
-    @ManyToOne
-    @JsonIgnore
-    public Shelter Shelter;
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-    @Enumerated(EnumType.STRING)
-    public Health Health;
+    public Gender getGender() {
+        return gender;
+    }
 
-    @Enumerated(EnumType.STRING)
-    public Availability Availability;
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
-    // other fields
+    public String getSpecies() {
+        return species;
+    }
 
-    // getters and setters
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public Shelter getShelter() {
+        return shelter;
+    }
+
+    public void setShelter(Shelter shelter) {
+        this.shelter = shelter;
+    }
+
+    public Health getHealth() {
+        return health;
+    }
+
+    public void setHealth(Health health) {
+        this.health = health;
+    }
+
+    public Availability getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Availability availability) {
+        this.availability = availability;
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                ", species='" + species + '\'' +
+                ", shelter=" + (shelter != null ? shelter.getId() : null) +
+                ", health=" + health +
+                ", availability=" + availability +
+                '}';
+    }
 }

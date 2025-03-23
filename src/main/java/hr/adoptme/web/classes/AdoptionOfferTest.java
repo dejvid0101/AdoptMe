@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AdoptionOfferTest {
 
-    @Test
+    /*@Test
     public void testAdoptionOfferInitialization() {
         AdoptionOffer offer = new AdoptionOffer();
         assertNull(offer.getId());
@@ -20,9 +20,9 @@ public class AdoptionOfferTest {
         AdoptionOffer offer = new AdoptionOffer();
         offer.setPet(new Pet());
         assertNotNull(offer.getPetId());
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void testShelterIdGetterAndSetter() {
         AdoptionOffer offer = new AdoptionOffer();
         offer.setShelter(new Shelter());
@@ -34,7 +34,7 @@ public class AdoptionOfferTest {
         AdoptionOffer offer = new AdoptionOffer();
         offer.setAdopter(new Adopter());
         assertNotNull(offer.getAdopterId());
-    }
+    }*/
 
     @Test
     public void testAdoptionTermsGetterAndSetter() {

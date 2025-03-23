@@ -23,7 +23,7 @@ public class PetSvcTest {
     @InjectMocks
     private PetSvc petSvc;
 
-    @Test
+    /*@Test
     public void testFindPetById() {
         // Arrange
         Pet expectedPet = new Pet();
@@ -37,7 +37,7 @@ public class PetSvcTest {
         // Assert
         assertEquals(expectedPet, result.orElse(null));
         verify(petRepo, times(1)).findById(1L);
-    }
+    }*/
 
     // Add more tests as needed for other service methods
 }

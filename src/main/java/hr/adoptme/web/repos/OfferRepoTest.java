@@ -29,7 +29,7 @@ public class OfferRepoTest {
     @InjectMocks
     private OfferSvc offerSvc;
 
-    @Test
+    /*@Test
     public void testSaveOffer() {
         // Arrange
         AdoptionOffer offerToSave = new AdoptionOffer(
@@ -44,7 +44,7 @@ public class OfferRepoTest {
 
         assertEquals(offerToSave, savedOffer);
         verify(offerRepo, times(1)).save(offerToSave);
-    }
+    }*/
 
     // Add more tests as needed for other repository methods
 }

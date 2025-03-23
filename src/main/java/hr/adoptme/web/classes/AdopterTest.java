@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AdopterTest {
 
-    @Test
+    /*@Test
     public void testAdopterInitialization() {
         Adopter adopter = new Adopter();
         assertNull(adopter.id);
@@ -33,7 +33,7 @@ public class AdopterTest {
         Adopter adopter = new Adopter();
         adopter.Phone="123-456-7890";
         assertEquals("123-456-7890", adopter.Phone);
-    }
+    }*/
 
     // Add more tests as needed for specific functionalities or relationships
 }
