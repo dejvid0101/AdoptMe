@@ -1,6 +1,4 @@
 package hr.adoptme.web.classes;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import hr.adoptme.web.enums.Availability;
 import hr.adoptme.web.enums.Gender;
 import hr.adoptme.web.enums.Health;
@@ -44,8 +42,6 @@ public class Pet {
         this.health = health;
         this.availability = availability;
     }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }

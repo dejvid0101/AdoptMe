@@ -12,21 +12,21 @@ import java.util.Optional;
 public class PetSvc {
 
     @Autowired
-    private PetRepo PetRepo;
+    private PetRepo petRepo;
 
     public Optional<Pet> findPetById(Long id) {
-        return PetRepo.findById(id);
+        return petRepo.findById(id);
     }
 
     public List<Pet> findAllPets() {
-        return PetRepo.findAll();
+        return petRepo.findAll();
     }
 
     public Pet savePet(Pet Pet) {
-        return PetRepo.save(Pet);
+        return petRepo.save(Pet);
     }
 
     public void deletePet(Long id) {
-        PetRepo.deleteById(id);
+        petRepo.deleteById(id);
     }
 }

@@ -1,7 +1,6 @@
 package hr.adoptme.web.classes;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class AdoptionOffer {

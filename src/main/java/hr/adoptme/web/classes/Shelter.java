@@ -1,8 +1,4 @@
 package hr.adoptme.web.classes;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import hr.adoptme.web.classes.AdoptionOffer;
-import hr.adoptme.web.classes.Pet;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -24,8 +20,6 @@ public class Shelter {
 
     public Shelter() {
     }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -50,7 +44,6 @@ public class Shelter {
         this.address = address;
     }
 
-    // Collections should typically only expose getters
     public List<Pet> getPets() {
         return pets;
     }

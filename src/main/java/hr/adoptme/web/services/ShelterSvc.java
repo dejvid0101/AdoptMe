@@ -12,22 +12,22 @@ import java.util.Optional;
 public class ShelterSvc {
 
     @Autowired
-    private ShelterRepo ShelterRepo;
+    private ShelterRepo shelterRepo;
 
     public Optional<Shelter> findShelterById(Long id) {
-        return ShelterRepo.findById(id);
+        return shelterRepo.findById(id);
     }
 
     public List<Shelter> findAllShelters() {
-        return ShelterRepo.findAll();
+        return shelterRepo.findAll();
     }
 
     public Shelter saveShelter(Shelter Shelter) {
-        return ShelterRepo.save(Shelter);
+        return shelterRepo.save(Shelter);
     }
 
     public void deleteShelter(Long id) {
-        ShelterRepo.deleteById(id);
+        shelterRepo.deleteById(id);
     }
 }
 

@@ -1,15 +1,11 @@
 package hr.adoptme.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.adoptme.web.classes.*;
 import hr.adoptme.web.data_objects.AdopterDTO;
 import hr.adoptme.web.data_objects.AdoptionOfferDTO;
 import hr.adoptme.web.data_objects.PetDTO;
 import hr.adoptme.web.data_objects.ShelterDTO;
-import hr.adoptme.web.enums.Availability;
-import hr.adoptme.web.enums.Gender;
-import hr.adoptme.web.enums.Health;
 import hr.adoptme.web.services.AdopterSvc;
 import hr.adoptme.web.services.OfferSvc;
 import hr.adoptme.web.services.PetSvc;
@@ -131,6 +127,7 @@ public class WebCtrlr {
         offerSvc.deleteOffer(id);
     }
 
+    // utility methods for entity
     private Pet convertToPetEntity(PetDTO dto) {
         return new Pet(
                 dto.getName(),

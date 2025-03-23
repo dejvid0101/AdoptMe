@@ -1,7 +1,6 @@
 package hr.adoptme.web.repos;
 
 import hr.adoptme.web.classes.Pet;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
